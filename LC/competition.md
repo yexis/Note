@@ -1,5 +1,6 @@
-1. 负数取模
+### 1. 负数取模
 ans: 负数取模依然是负数，如 -1 % 4 = -1，要解决需要代码：
+
 ```c++
 int modab(int a, int b) {
 	while (a < 0) {
@@ -9,8 +10,18 @@ int modab(int a, int b) {
 }
 ```
 
-2. 数组离散化
+### 2. 数组离散化
 
+```cpp
+// 会改变原数组
+// 如果不想改变原数组，复制数组后调用 discretize
+void discretize(vector<int>& ob) {
+  vector<int> b = ob;
+  sort(b.begin(), b.end());
+  b.erase(unique(b.begin(), b.end()), b.end());
+  for (auto& v : ob) {
+    v = lower_bound(b.begin(), b.end(), v) - b.begin() + 1;
+  }
+}
+```
 
-3. 二进制子集包含 
-如果要证明mask1是否有mask2的二进制子集，只需要判断`mask1 & mask2 == mask1`是否成立即可

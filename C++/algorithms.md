@@ -9,3 +9,16 @@ sort(nums.begin(), nums.end());
 nums.erase(unique(nums.begin(), nums.end()), nums.end());
 ```
 
+
+
+2. 最大公因数   最小公倍数
+
+   ```cpp
+   // 计算两个数的最大公因数
+   gcd(x, y);
+   
+   // 计算两个数的最小公倍数
+   lcm(x, y);
+   ```
+
+   

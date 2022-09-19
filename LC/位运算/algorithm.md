@@ -1,3 +1,5 @@
+### 1. C++自带
+
 ```cpp
 // 计算n的二进制表示中，有多少个前导0
 __builtin_clz(n);
@@ -6,6 +8,7 @@ __builtin_clz(n);
 31 - __builtin_clz(n);
 
 // 计算n的二进制表示中，从最低位开始(右起)的连续的0的个数
-__builtin_ctz(n)
+__builtin_ctz(n);
+
 ```
 
