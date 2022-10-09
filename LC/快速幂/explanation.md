@@ -100,7 +100,7 @@ long long normalPower(long long base, long long power) {
 int power(int n, int b) {
     int res = 1;
     int x = n;
-    while(x > 0) {
+    while(b) {
         if (b & 1) res *= x;
         x *= x;
         b >>= 1;
@@ -115,7 +115,7 @@ int power(int n, int b) {
         n = 1 / n;
         b = -b;
     }
-    while(x > 0) {
+    while(b) {
         if (b & 1) res *= x;
         x *= x;
         b >>= 1;
