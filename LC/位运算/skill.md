@@ -7,3 +7,81 @@ bool contain(int mask1, mask2) {
 }
 ```
 
+
+
+### 2. 计算二进制最低位的1的值  lowbit
+
+```cpp
+// 比如计算6（110）最低位的1，结果为2 
+int lowbit(int x) {
+  return x & -x;
+}
+```
+
+
+
+### 3. 将x二进制中最低位的1变成0
+
+```cpp
+int cal(int x) {
+  return x & (x - 1);
+}
+```
+
+
+
+### 4. 将x二进制中最低n位的1变成0
+
+```cpp
+// 将x二进制中最低n位的1变成0
+// 前提：x二进制中1的数量不少于n，即置位数(x) >= n
+
+// 方法1
+int cal(int x, int n) {
+  for(int i = 0; i < n; i++) {
+  	x -= lowbit(x);
+	}
+}
+
+// 方法2
+int cal(int x, int n) {
+  for (int i = 0; i < n; i++) {
+    x &= (x - 1);
+  }
+}
+```
+
+
+
+### 5. 将x二进制中最低位的0变成1
+
+```cpp
+int cal(int x) {
+  return x | (x + 1);
+}
+```
+
+
+
+### 6. 将x二进制中最低n位的0变成1
+
+```cpp
+// x = 4; 100 | 101 = 101
+// x = 5; 101 | 110 = 111
+// x = 7; 111 | 1000 = 1111
+int cal(int x, int n) {
+  for (int i = 0; i < n; i++) {
+    x |= (x + 1);
+  }
+  return x;
+}
+```
+
+
+
+
+
+
+
+
+
