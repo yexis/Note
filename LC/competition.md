@@ -25,3 +25,9 @@ void discretize(vector<int>& ob) {
 }
 ```
 
+### 3. 判断一个字符串/数组中所有元素都相等
+
+```cpp
+equal(s.begin() + 1, s.end(), s.begin());
+```
+
