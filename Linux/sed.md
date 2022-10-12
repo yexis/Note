@@ -24,11 +24,30 @@ sed -i 's/\s\+/\t/g' file
 cat rac | sed -r -e 's/.*logid:(\S+).*speech_id:(\S+).*/\1\t\2/'
 ```
 
-3. 在文件前后增加一列
+3. 在文件每行数据前后增加一列
 ```sh
 # 在前
 cat test | sed 's/^/a\t/g'
 
 # 在后
 cat test | sed 's/$/\ta/g'
+```
+
+4. 删除正则匹配的行
+```sh
+# 删除带有小数的行
+sed -i '/\.[0-9]/d' newpush.out
+```
+
+5. 在文件每行数据前后增加字符
+```sh
+# 在前 插入字符a
+cat test | sed 's/^/a/'
+
+# 在后 插入字符a
+cat test | sed 's/$/a/'
+
+# 前后同时 插入字符a
+cat test | sed 's/^/a/; s/$/a/'
+sed -i sed 's/^/a/; s/$/a/' test
 ```
