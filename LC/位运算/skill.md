@@ -79,6 +79,35 @@ int cal(int x, int n) {
 
 
 
+### 7. 提取x二进制中最低n位1的值
+
+```cpp
+// 6(110) = 2(10) + 4(100)
+// 方法1
+vector<int> cal(int n) {
+  vector<int> lbs;
+  while (n) {
+    lb = n & -n;
+    lbs.push_back(lb);
+    x -= lb;
+  }
+}
+
+// 方法2
+vector<int> cal(int n) {
+  while (n) {
+    int b = 0;
+  	int x = 1;
+    while (x * 2 <= n) {
+      x <<= 1;
+      b++;
+    }
+    n -= x;
+    lbs.push_back(pow(2, b));
+  }
+}
+```
+
 
 
 
