@@ -1,5 +1,5 @@
+### 1. C++ 去重函数的用法
 
-1. C++ 去重函数的用法
 ```cpp
 // unique 函数
 // 作用：去除容器或者数组中相邻元素的重复出现的元素
@@ -11,14 +11,32 @@ nums.erase(unique(nums.begin(), nums.end()), nums.end());
 
 
 
-2. 最大公因数   最小公倍数
+### 2. 最大公因数   最小公倍数
 
-   ```cpp
-   // 计算两个数的最大公因数
-   gcd(x, y);
-   
-   // 计算两个数的最小公倍数
-   lcm(x, y);
-   ```
+```cpp
+// 计算两个数的最大公因数
+gcd(x, y);
 
-   
+// 计算两个数的最小公倍数
+lcm(x, y);
+```
+
+
+
+### 3. 最大最小值
+
+```cpp
+// 两数比较
+template <class T> pair <const T&,const T&> minmax (const T& a, const T& b) {
+  return (b<a) ? std::make_pair(b,a) : std::make_pair(a,b);
+}
+
+// 数组比较
+template <class ForwardIterator, class Compare>
+  pair<ForwardIterator,ForwardIterator>
+    minmax_element (ForwardIterator first, ForwardIterator last, Compare comp);
+// 用法
+const auto [pmi, pmx] = minmax_element(nums.begin(), nums.end());
+int mi = *pmi, ma = *pma;
+```
+
