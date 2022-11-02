@@ -2,7 +2,7 @@
 
 std::unordered_map 对$key$的要求：存在$hash$函数
 
-std::map 对$key$要求：支持比较函数，即$==$符号
+std::map 对$key$要求：支持比较函数，即$<$符号
 
 
 
