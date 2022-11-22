@@ -11,6 +11,6 @@ udw.sh文件
 q=`date`
 echo $q
 
-s=`curl -s -L --max-redirs 5 http://nj02-qe-manager02.nj02.baidu.com:8041/search.jsp?user=dumi_dcs_yun`
+s=`curl -s -L --max-redirs 5 http://www.xxx.com`
 echo "$s" | grep -oP "<td>(\d+)</td>.*<td>(\d+)</td>" | grep -oP "(\d+)" | tail -1
 ```

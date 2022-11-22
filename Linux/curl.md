@@ -8,5 +8,5 @@ curl -L --max-redirs 5 http://www.reqbin.com/echo
 ### curl -s 解决进度打印问题
 ```sh
 # -s 不打印进度信息
-curl -s www.baidu.com
+curl -s www.xxx.com
 ```
