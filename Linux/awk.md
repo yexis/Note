@@ -1,3 +1,12 @@
+### 0 常用
+```sh
+# 按x列分组，按y列求和
+cat 20221110/newpush.out  | awk '{x[$5]+=$2} END {for (i in x) {print x[i], i}}' | sort -n
+
+# 按某一列求和
+cat newpush.out | awk '{print $2}' | awk '{sum+=$1}END{print sum}'
+```
+
 ### 1 基本
 
 ```shell
