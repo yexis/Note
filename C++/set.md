@@ -10,35 +10,63 @@ set<int, greater<>> st;
 
 ##### 1.2 定义结构体 重载"<"符号
 ```cpp
-struct Node{
+class Node {
 public:
     int a;
-    string s;
-    Node(const int& aa, const string& ss) {
-        a = aa;
-        s = ss;
-    }
-    // 函数最后必须是const吗？不加const为啥无法通过？
-    bool operator < (const Node& b) const {
-        if (a == b.a) {
-          return s > b.s;
+    int b;
+    Node(int _a, int _b) : a(_a), b(_b) {}
+    const bool operator < (const Node& that) const {
+        if (a == that.a) {
+            return b < that.b;
         }
-        return a < b.a;
-    };
+        return a < that.a;
+    }
 };
 ```
 
-##### 1.3 自定义排序规则
+##### 1.3 自定义排序方法
 ```cpp
-    auto cmp = [&](const auto& a, const auto& b) {
-        if (a.second == b.second) {
-            return a.first < b.first;
-        }
-        return a.second > b.second;
-    };
-    set<pair<int, int>, decltype(cmp)> st(cmp);
+// 写法一
+function<bool(const pair<int, int>&, const pair<int, int>&)> cmp = [&](const auto& a, const auto& b) {
+    if (a.first == b.first) {
+        return a.second < b.second;
+    }
+    return a.first < b.first;
+};
+
+// 写法二
+auto cmp = [&](const auto& a, const auto& b) {
+    if (a.second == b.second) {
+        return a.first < b.first;
+    }
+    return a.second > b.second;
+};
+set<pair<int, int>, decltype(cmp)> st(cmp);
 ```
 
 ##### 1.4 定义结构体 重载()符号 生成仿函数
 ```cpp
+class Node {
+public:
+    int a;
+    int b;
+    Node(int _a, int _b) : a(_a), b(_b) {}
+};
+struct cmp {
+    const bool operator() (const Node& x, const Node& y) {
+        if (x.a == y.a) {
+            return x.b > y.b;
+        }
+        return x.a > y.a;
+    }
+};
+void test_set() {
+    set<Node, cmp> st;
+    st.emplace(0, 0);
+    st.emplace(1, 1);
+    st.emplace(2, 2);
+    for (auto [d, u] : st) {
+        cout << d << " " << u << endl;
+    }
+}
 ```
