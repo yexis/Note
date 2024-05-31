@@ -1,4 +1,4 @@
-### 1. C++ 去重函数的用法
+##### 1. C++ 去重函数的用法
 
 ```cpp
 // unique 函数
@@ -9,9 +9,7 @@ sort(nums.begin(), nums.end());
 nums.erase(unique(nums.begin(), nums.end()), nums.end());
 ```
 
-
-
-### 2. 最大公因数   最小公倍数
+##### 2. 最大公因数   最小公倍数
 
 ```cpp
 // 计算两个数的最大公因数
@@ -21,9 +19,7 @@ gcd(x, y);
 lcm(x, y);
 ```
 
-
-
-### 3. 最大最小值
+##### 3. 最大最小值
 
 ```cpp
 // 两数比较
@@ -38,5 +34,16 @@ template <class ForwardIterator, class Compare>
 // 用法
 const auto [pmi, pmx] = minmax_element(nums.begin(), nums.end());
 int mi = *pmi, ma = *pma;
+```
+
+##### 4. 小数 保留两位有效数字  
+
+```cpp
+// 自带四舍五入的规则
+double to(double v) {
+  stringstream ss;
+  ss << fixed << setprecision(2) << v;
+  return ss.str();
+}
 ```
 
