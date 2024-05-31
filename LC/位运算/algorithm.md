@@ -18,3 +18,9 @@ __builtin_popcountll()
 
 ```
 
+```cpp
+// 计算n的二进制表示中，从最低位开始(右起)的连续的0的个数
+__builtin_ctz(n);
+// 如
+__builtin_ctz(8) = 3
+```
