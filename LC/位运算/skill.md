@@ -140,3 +140,25 @@ for (int i = 0; i < s.size(); i++) {
 // a ~ z 的 ASCII 码为: 011 00001 ~ 011 11010，保留后五位，即 000 00001 ~ 000 11010，正好是 1 ~ 26。
 ```
 
+
+
+### 10 二进制枚举 
+
+* 枚举二进制 
+* 枚举二进制子集
+* 二进制子集枚举
+
+```cpp
+namespace SUB_4 {
+    void get(int n) {
+        for (int mask = 0; mask < (1 << n); mask++) {
+            for (int sub = mask; sub; sub = (sub - 1) & mask) {
+
+            }
+        }
+    }
+}
+```
+
+
+

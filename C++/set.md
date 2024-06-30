@@ -1,4 +1,11 @@
+## set 讲解 
+
+* set详解
+
+  
+
 ### 一 自定义排序
+
 ##### 1.1 简单升序/降序
 ```cpp
 // 类型重载了"<"即可
@@ -70,3 +77,23 @@ void test_set() {
     }
 }
 ```
+
+##### 1.5 set lower_bound时如何判断两边都有元素
+
+```cpp
+set<int> st;
+auto it = st.lower_bound(x);
+if (it != st.begin() && next(it) != st.end()) {
+    // 两边都存在元素
+    int l = *prev(it), r = *next(it);
+} else if (it != st.begin()) {
+    // 左边没有元素，但是右边有元素
+    int l = *prev(it);
+} else if(next(it) != st.end()) {
+    // 右边没有元素，但是左边有元素
+    int r = *next(it);
+} else {
+
+}
+```
+
