@@ -24,31 +24,38 @@
 
 ```cpp
 // ands: 记录子数组的的按位与结果 以及拥有相同值子数组右端点的最小值
+// ands的长度最大为32，可直接进行遍历
 vector<pair<int, int> > ands;
 
-void cal(vector<int>& nums) {
-  ands.clear();
-  int n = nums.size();
+ll cal(vector<int>& nums, int K) {
+    ands.clear();
+    int n = nums.size();
 
-  for (int i = n - 1; i >= 0; i--) {
-    int num = nums[i];
-    ands.emplace_back(num, i);
-    ands[0].first &= num;
+    ll ans = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        int num = nums[i];
+        ands.emplace_back(num, i);
 
-    int k = 0;
-    for (int j = 1; j < ands.size(); j++) {
-      ands[j].first &= num;
-      if (ands[k].first == ands[j].first) {
-        ands[k].second = ands[j].second;
-      } else {
-        ands[++k] = ands[j];
-      }
+        int k = 0;
+        for (int j = 0; j < ands.size(); j++) {
+            ands[j].first &= num;
+            if (ands[k].first == ands[j].first) {
+                ands[k].second = ands[j].second;
+            } else {
+                ands[++k] = ands[j];
+            }
+        }
+        ands.resize(k + 1);
+        // 根据题目条件设置
+        ll last = n;
+        for (auto& [kk, vv] : ands) {
+            if (kk == K) {
+                ans += last - vv;
+            }
+            last = vv;
+        }
     }
-    ands.resize(k + 1);
-    // 根据题目条件设置
-    for (auto& a : ands) {
-      mi = min(mi, abs(a.first - target));
-    }
-  }
+    return ans;
+}
 ```
 
