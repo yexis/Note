@@ -53,3 +53,7 @@ int ask(int l, int r) {
 
 ##### 五 最大公因数 gcd
 
+
+
+##### 六 最小公倍数 lcm
+
