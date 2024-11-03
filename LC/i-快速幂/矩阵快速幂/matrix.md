@@ -21,6 +21,13 @@ struct MA {
             v[i][i] = 1;
         }
     }
+     void all1() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                v[i][j] = 1;
+            }
+        }
+    }
     MA operator* (const MA& b) {
         MA res;
         for (int i = 0 ; i < N; i++) {

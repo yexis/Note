@@ -40,7 +40,7 @@ struct Lca {
             st[u][0] = o;
             for (auto& v : g[u]) {
                 if (v != o) {
-                    dep[v] += dep[u] + 1;
+                    dep[v] = dep[u] + 1;
                     dfs(v, u);
                 }
             }
