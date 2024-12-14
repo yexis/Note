@@ -10,10 +10,10 @@ int modab(int a, int b) {
 }
 ```
 
-### 2. 数组离散化
+### 2. 数组离散化模板
 
 ```cpp
-// 方法1
+// 方法1：vector操作
 // 会改变原数组
 // 如果不想改变原数组，复制数组后调用 discretize
 void discretize(vector<int>& ob) {
@@ -26,6 +26,16 @@ void discretize(vector<int>& ob) {
     v = lower_bound(b.begin(), b.end(), v) - b.begin() + 1;
   }
 }
+```
+
+```cpp
+// 方法2：数组操作
+int b[200010];
+sort(b, b + n);  // 排序
+int zn = unique(b, b + n) - b;  // 去重，zn 为去重后数组的长度
+auto get_id = [&](int x) -> int {
+  return lower_bound(b, b + zn, x) - b;
+};
 ```
 
 ### 3. 判断一个字符串/数组中所有元素都相等

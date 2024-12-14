@@ -47,6 +47,40 @@ struct RMQ {
 
 ##### 三 最大值 max
 
+```cpp
+static constexpr int maxn = 100010;
+struct RMQ {
+    int Log;
+    int n;
+    vector<vector<ll>> st;
+    // 采用vector<RMQ>时，可以将其改造成init方法
+    RMQ(vector<ll>& ob) {
+        n = ob.size();
+        // Log 存储n以内最大的二次幂指数，实在不行可以设置成最大 32
+        Log = 32 - __builtin_clz(n);
+        // 这里一定不能使用resize，resize不会更新已有范围
+        st.assign(n, vector<ll>(Log, -1));
+        for (int i = 0; i < n; i++) {
+            st[i][0] = ob[i];
+        }
+
+        for (int d = 1;  d < Log; d++) {
+            for (int i = 0; i + (1 << (d - 1)) < n; i++) {
+                st[i][d] = max(st[i][d - 1], st[i + (1 << (d - 1))][d - 1]);
+            }
+        }
+    }
+
+    ll ask(int l, int r) {
+        if (l > r) {
+            return -1;
+        }
+        int d = 31 - __builtin_clz(r - l + 1);
+        return max(st[l][d], st[r - (1 << d) + 1][d]);
+    }
+};
+```
+
 
 
 ##### 四 最小值 min
