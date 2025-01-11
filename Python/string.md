@@ -8,3 +8,12 @@ str = "this is string example....wow!!! this is really string";
 print str.replace("is", "was");
 print str.replace("is", "was", 3);
 ```
+
+
+
+##### 字符串取反 reverse
+
+```
+s = s[::-1]
+```
+
