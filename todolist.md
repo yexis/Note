@@ -22,4 +22,7 @@
 22. 牛客周赛71(讲解) E(等腰三角形底边多少时面积最大 done)/ **F** 
     1. 等腰三角形：固定底边时，腰越大，面积越大；固定腰时，底边为$\sqrt 2$倍的腰时，面积最大（即等腰三角形）；
 23. 牛客周赛73 E(done)  **F**
-24. **牛客周赛72 F**
+24. **牛客周赛72 F **https://ac.nowcoder.com/acm/contest/view-submission?submissionId=74216773
+25. https://www.luogu.com.cn/problem/solution/P11563
+26. **牛客周赛81 E F**
+
