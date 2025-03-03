@@ -25,4 +25,5 @@
 24. **牛客周赛72 F **https://ac.nowcoder.com/acm/contest/view-submission?submissionId=74216773
 25. https://www.luogu.com.cn/problem/solution/P11563
 26. **牛客周赛81 E F**
-
+27. **力扣周赛438 T4**
+28. **abc 395 F**
