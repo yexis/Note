@@ -1,4 +1,4 @@
-### Title 划分型DP 模板
+### Title 划分型DP 区间不相邻&不固定长度
 
 ##### 1 emphasis
 
@@ -8,11 +8,25 @@
 
 
 
+
+
 ##### 2 key points
 
 ###### 问题
 
 给定一个整数数组$nums$，需要将$nums$划分成$k$个不同的区间，每个区间的长度至少为$m$，问所有子数组的最大和为多少？（这里可以有多种问法，总之和区间相关）
+
+
+
+###### 状态定义
+
+**外层枚举区间个数$k$，内层枚举索引$i$**
+
+
+
+###### 关键点
+
+**不必相邻意味着可以存在 `dp[k][i] = d[k][i - 1]`的转移**，即当前元素可以不选
 
 
 
@@ -56,8 +70,6 @@ for (int i = 1; i <= n; i++) {
 
 
 
-
-
 ###### 状态转移
 
 对于第$i$个元素考虑 选 与 不选
@@ -83,41 +95,42 @@ public:
     const int INF = 2e9;
     int maxSum(vector<int>& a, int K, int M) {
         int n = a.size();
-        
-        // 前缀和：方便计算区间和
-        int sum[n + 1];
-        sum[0] = 0;
+        vector<int> sum(n + 1);
         for (int i = 0; i < n; i++) {
             sum[i + 1] = sum[i] + a[i];
         }
-        
-        // dp[i][j]表示前j个元素形成i个子数组的最大和
-        // 将子数组个数定义在第一维，方便计算前缀和优化
-        vector dp(K + 1, vector<int>(n + 1, -INF));
+
+        int ans = -INF;
+        // dp[i][j]：前i个元素组成j个子数组的最大和
+      	// 选和不选问题
+      	// ①不选，则 dp[i][j] = dp[i][j - 1]
+      	// ②选，则 dp[k][i] = max( {dp[k - 1][L] + sum[i] - sum[L]} )
+      	// 将sum[L]移项可得，dp[k][i] = max( {(dp[k - 1][L] - sum[L]) + sum[i]} )
+        vector<vector<int>> dp(K + 1, vector<int>(n + 1, -INF));
         for (int i = 0; i <= n; i++) {
             dp[0][i] = 0;
         }
-
-        // 选 或 不选 问题
-        // 不选: 
-        // ① dp[i][j] = dp[i][j - 1]
-        // 选: 
-        // dp[i][j] = max{ dp[i - 1][L] + sum[j] - sum[L]}  L = [0, i - M]
-        // sum[L]在遍历到i时无法得知，所以将sum[L]和L关联在一起，移项得:
-        // ② dp[i][j] = max {(dp[i - 1][L] - sum[L]) + sum[j]}  L = [0, i - M]
-        // 所以只需要维护 mx = dp[i - 1][L] - sum[L] 的最大值即可
         for (int k = 1; k <= K; k++) {
+            // 前缀和优化DP
+            // 注意： mx只能记录与L相关的信息
             int mx = -INF;
-            for (int i = M; i <= n; i++) {
+          	// 这里可直接从 i = k * M开始，因为要划分k个区间，只要需要 k * M个元素
+          	// 而 L 至少需要从 i - M 转移而来， 故 L 至少为 (k - 1) * M，即 i - M
+            for (int i = k * M; i <= n; i++) {
                 int L = i - M;
-                // 不选i（跳过当前元素）
+                // 不选
                 dp[k][i] = dp[k][i - 1];
-                // 选i，枚举当前区间的长度 [M, 无穷]
+                // 选
                 mx = max(mx, dp[k - 1][L] - sum[L]);
                 dp[k][i] = max(dp[k][i], mx + sum[i]);
             }
         }
-        return dp[K][n];
+      
+      	// 更新答案
+        for (int i = K * M; i <= n; i++) {
+            ans = max(ans, dp[K][i]);
+        }
+        return ans;
     }
 };
 ```
@@ -188,3 +201,6 @@ public:
 
 ##### 5 summary
 
+###### 例题
+
+[3473. 长度至少为 M 的 K 个子数组之和](https://leetcode.cn/problems/sum-of-k-subarrays-with-length-at-least-m/)
