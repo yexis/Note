@@ -2,6 +2,8 @@
 
 ##### 1 emphasis
 
+- dfs序
+- DFS序
 - 树的DFS序
 - 后序遍历
 - 左子树 → 右子树 → 父节点
@@ -41,6 +43,8 @@
 
 
 ##### 4 code
+
+[牛客周赛67-f 小Z的树迁移](https://ac.nowcoder.com/acm/contest/95016/F)
 
 ```cpp
 #include <iostream>
@@ -149,8 +153,8 @@ void solve() {
     // 数的深度
     vector<int> dep(n);
     // 数的dfs序 L表示进入dfs序，R表示离开dfs序
-    vector<int> L(n);
-    vector<int> R(n);
+  	// dfs序从 1 开始，[ L[u], R[u] ] 表示节点u的子树
+    vector<int> L(n), R(n);
     // 树上前缀和
     vector<ll> sum(n);
 
@@ -163,7 +167,7 @@ void solve() {
             dep[u] = dep[o] + 1;
         }
         max_dep = max(max_dep, dep[u]);
-        
+        // tot 从 1 开始
         L[u] = ++tot;
         p[dep[u]].push_back(L[u]);
         val[dep[u]].push_back(sum[u]);
