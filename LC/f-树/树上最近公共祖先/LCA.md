@@ -19,6 +19,8 @@
 
 ##### 4 code
 
+##### 版本1
+
 ```cpp
 struct Lca {
     // n : 节点数量
@@ -89,6 +91,87 @@ struct Lca {
     int get(int x, int y) {
         int ca = lca(x, y);
         return dep[x] + dep[y] - 2 * dep[ca];
+    }
+};
+```
+
+
+
+##### 版本2
+
+```cpp
+using pii = pair<int, int>;
+using ll = long long;
+struct Lca {
+    // n : 节点数量
+    // m : n的二进制长度
+    int n, m;
+    vector<int> dep;
+  	// g : 邻接表
+    vector<vector<pii>> g;
+    vector<vector<int>> st;
+    vector<vector<ll>> st2;
+    vector<ll> sum;
+    // 1. 初始化 + 计算倍增数组
+    Lca(int nn, vector<vector<pii>>& gg) {
+        n = nn;
+        m = 32 - __builtin_clz(n);
+        g = gg;
+        dep.resize(n);
+        sum.resize(n);
+        st.resize(n, vector<int>(m, -1));
+        st2.resize(n, vector<ll>(m, 1e18));
+
+        function<void(int, int)> dfs = [&](int u, int o) {
+            st[u][0] = o;
+            for (auto& [v, w] : g[u]) {
+                if (v != o) {
+                    dep[v] = dep[u] + 1;
+                    sum[v] = sum[u] + w;
+                    st2[v][0] = w;
+                    dfs(v, u);
+                }
+            }
+        };
+        dfs(0, -1);
+
+        for (int i = 1; i < m; i++) {
+            for (int u = 0; u < n; u++) {
+                if (st[u][i - 1] != -1) {
+                    st[u][i] = st[st[u][i - 1]][i - 1];
+                    st2[u][i] = st2[u][i - 1] + st2[st[u][i - 1]][i - 1];
+                }
+            }
+        }
+    }
+
+    // 2. 根据倍增数组计算lca
+    int lca(int x, int y) {
+        // 将 y 置于 较深的位置
+        if (dep[x] > dep[y]) {
+            swap(x, y);
+        }
+
+        // 让 x 和 y 位于同一深度
+        int d = dep[y] - dep[x];
+        for (; d; d &= d - 1) {
+            int i = __builtin_ctz(d);
+            y = st[y][i];
+        }
+        if (y == x) {
+            return x;
+        }
+
+        // 从大到小往上跳
+        for (int i = m - 1; i >= 0; i--) {
+            if (st[x][i] != st[y][i]) {
+                x = st[x][i];
+                y = st[y][i];
+            }
+        }
+
+        // 最后返回x的父节点
+        return st[x][0];
     }
 };
 ```

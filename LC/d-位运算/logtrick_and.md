@@ -4,6 +4,7 @@
 
 - logTrick
 - logtrick
+- log_trick
 
 
 

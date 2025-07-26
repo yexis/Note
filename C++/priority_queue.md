@@ -10,6 +10,22 @@ auto cmp = [&](const auto& a, const auto& b) {
 }
 proirity_queue<int, vector<int>, decltype(cmp)> pq(cmp);
 
+
+// 写法2
+struct node {
+    double d;
+    int mask;
+    int stg;
+    int par;
+};
+struct cmp {
+    bool operator()(const node& a, const node& b) {
+        return a.d > b.d;  // 小的先出队，小顶堆
+	      // return a.d < b.d;  // 大顶堆
+    }
+};
+
+priority_queue<node, vector<node>, cmp> pq;
 ```
 
 
