@@ -10,6 +10,9 @@
 求和 \sum_{}^{}
 求乘积 \prod_{}^{}
 
+排列 \binom{a}{b}
+排列 {a \choose b}
+
 # 关系符号
 全等于(三横) 
 \equiv
