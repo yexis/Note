@@ -252,7 +252,7 @@ public:
         Seg seg;
         seg.build(1, 0, n);
         
-        // 上一个出现的位置
+        // 记录上一个出现的位置
         unordered_map<int, int> last;
         int ans = 0, sum = 0;
         for (int i = 1; i <= n; i++) {
