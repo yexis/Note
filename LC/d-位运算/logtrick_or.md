@@ -4,8 +4,8 @@
 
 > 按位或的结果会随着区间$[l, r]$的增大，单调不增
 >
-> 1. 当固定$l$时，随着$r$的增大，区间按位与结果不可能减小，要么增大、要么不变
-> 2. 当固定$r$时，随着$l$的减小，区间按位与结果不可能减小，要么增大，要么不变
+> 1. 当固定$l$时，随着$r$的增大，区间按位或结果不可能减小，要么增大、要么不变
+> 2. 当固定$r$时，随着$l$的减小，区间按位或结果不可能减小，要么增大，要么不变
 > 3. 关于区间按位或主题相关的问题，根据题意，合理设置固定$l$或者固定$r$
 
 
@@ -20,8 +20,7 @@
 ```cpp
 // ors: 记录子数组的的按位或结果 以及拥有相同值子数组右端点的最小值
 vector<pair<int, int> > ors;
-
-void cal(vector<int>& arr) {
+void cal_or(vector<int>& arr) {
   	ors.clear();
     int n = arr.size();
     int ans = 0;
@@ -45,6 +44,8 @@ void cal(vector<int>& arr) {
         for (auto o : ors) {
             st.insert(o.first);
         }
+	      cout << "i:" << i << " " << " || ";
+        for (auto o : ors) cout << o.second << " "; cout << "\n";
     }
 
     return st.size();

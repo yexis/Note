@@ -57,6 +57,8 @@ ll cal(vector<int>& nums, int K) {
             }
             last = vv;
         }
+	      cout << "i:" << i << " || ";
+        for (auto a : ands) cout << a.second << " "; cout << "\n";
     }
     return ans;
 }
