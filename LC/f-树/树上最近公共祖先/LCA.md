@@ -122,18 +122,18 @@ struct Lca {
         st.resize(n, vector<int>(m, -1));
         st2.resize(n, vector<ll>(m, 1e18));
 
-        function<void(int, int)> dfs = [&](int u, int o) {
+        auto dfs = [&](auto&& dfs, int u, int o) {
             st[u][0] = o;
             for (auto& [v, w] : g[u]) {
                 if (v != o) {
                     dep[v] = dep[u] + 1;
                     sum[v] = sum[u] + w;
                     st2[v][0] = w;
-                    dfs(v, u);
+                    dfs(dfs, v, u);
                 }
             }
         };
-        dfs(0, -1);
+        dfs(dfs, 0, -1);
 
         for (int i = 1; i < m; i++) {
             for (int u = 0; u < n; u++) {

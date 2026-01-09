@@ -2,7 +2,6 @@
 
 ##### 1 emphasis
 
-- dfs序
 - DFS序
 - 树的DFS序
 - 后序遍历

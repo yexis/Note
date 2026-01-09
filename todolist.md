@@ -77,6 +77,11 @@
 65. 对于只有-1和1的数组，其前缀和是连续的
 66. **牛客挑战赛83 B** C(done 根号分解构造) https://ac.nowcoder.com/acm/contest/121395
 67. **力扣周赛 476T4解法 （看下树状数组解法）** https://leetcode.cn/problems/count-stable-subarrays/
+68. **牛客小白月赛11 F**   https://ac.nowcoder.com/acm/contest/124098/F
+69. 力扣周赛478 T4（主席树解法 + **莫队解法**）
+70. **牛客周赛120 F**
+71. **虚树例题 **[3786. 树组的交互代价总和](https://leetcode.cn/problems/total-sum-of-interaction-cost-in-tree-groups/) 
+    - 讲解https://www.bilibili.com/video/BV1yYWYzGE38/?spm_id_from=333.337.search-card.all.click&vd_source=a5e205ce7c5908e561eb8023831ffff2
 
-
+ 
 
