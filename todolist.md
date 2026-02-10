@@ -82,6 +82,7 @@
 70. **牛客周赛120 F**
 71. **虚树例题 **[3786. 树组的交互代价总和](https://leetcode.cn/problems/total-sum-of-interaction-cost-in-tree-groups/) 
     - 讲解https://www.bilibili.com/video/BV1yYWYzGE38/?spm_id_from=333.337.search-card.all.click&vd_source=a5e205ce7c5908e561eb8023831ffff2
+72. **牛客小白月赛127 F** https://ac.nowcoder.com/acm/contest/126634/F
 
  
 
