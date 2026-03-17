@@ -59,9 +59,9 @@ $$
 
 ![image-20250405151106470](/Users/yex/Library/Application Support/typora-user-images/image-20250405151106470.png)
 
-很明显，下凸包最优决策点 $p$ 存在性质：位于 $p$ 左侧的线段斜率 $\lt k$， 位于 $p$ 右侧的线段斜率 $ \ge k$， 
+**很明显，下凸包最优决策点 $p$ 存在性质：位于 $p$ 左侧的线段斜率 $\lt k$， 位于 $p$ 右侧的线段斜率 $ \ge k$，** 
 
-**且随着 $i$ 的增加，斜率 $k$ 是单调递增的，所以可以使用单调队列进行维护**
+且随着 $i$ 的增加，斜率 $k$ 是单调递增的，所以可以使用单调队列进行维护
 
 单调队列维护步骤：
 
@@ -91,7 +91,7 @@ $$
 
 ##### 4 code
 
-[模板：3500. 将数组分割为子数组的最小代价](https://leetcode.cn/problems/minimum-cost-to-divide-array-into-subarrays/)
+[模板：3500. 将数组分割为子数组的最小代价](https://leetc   ode.cn/problems/minimum-cost-to-divide-array-into-subarrays/)
 
 ```cpp
 /*
