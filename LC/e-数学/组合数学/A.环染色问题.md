@@ -24,6 +24,14 @@ https://ac.nowcoder.com/acm/contest/132903/F
 
 染色方案数为： $a_n=(k−1)^n+(−1)^n(k−1)$
 
+> 除了以上公式方法可以求得，还可以使用递推方法求得
+>
+> 很明显，令 答案为 $a_n$ ，则有 $a_n = k(k-1)^{n-1} - a_{n - 1}$ 其中 $n \ge 3$
+>
+> 因为当第一个节点和最后一个节点颜色相同时，就是$a_{n-1}$
+>
+> 所以，可以从 $a_1$, $a_2$, $a_3$，$...$ 一直递推到$a_n$
+
 
 
 ##### 5 code
@@ -110,7 +118,7 @@ ll power(ll x, ll b, ll m = mod) {
 }
 
 /*
- * https://ac.nowcoder.com/acm/contest/131539/F
+ * 
 */
 
 void solve() {
@@ -127,7 +135,6 @@ void solve() {
         st[i].insert(j);
         deg[i]++, deg[j]++;
     }
-
     
     bool in_loop[n + 1]; for (int i = 1; i <= n; i++) in_loop[i] = true;
     queue<int> q; for (int i = 1; i <= n; i++) if (deg[i] == 1) {q.push(i); in_loop[i] = false;}
@@ -138,6 +145,25 @@ void solve() {
         }
     }
     int in_loop_cnt = 0; for (int i = 1; i <= n; i++) if (in_loop[i]) in_loop_cnt++;
+
+  	// 方法一：
+    auto get_loop_ans = [&](ll cc) -> ll {
+        ll ans = power(25, cc) + power(-1, cc) * 25; ans += mod; ans %= mod;
+        return ans;
+    };
+  
+  	// 方法二：
+    // a_n = 26 * 25^(n-1) - a_{n-1}，其中 n >= 3
+    auto get_loop_ans_2 = [&](ll cc) -> ll {
+        if (cc == 1) return 26;
+        if (cc == 2) return 650;
+        vector<ll> v(cc + 1); v[1] = 26; v[2] = 650;
+        for (int i = 3; i <= cc; i++) {
+            v[i] = 26 * power(25, i - 1) % mod + mod - v[i - 1];
+            v[i] %= mod;
+        }
+        return v[cc];
+    };
 
     // bfs
     bool seen[n + 1]; for (int i = 0; i <= n; i++) seen[i] = false;
@@ -152,7 +178,8 @@ void solve() {
                 q2.push(j); seen[j] = true;
                 j = a[j]; cc++;
             }
-            ll base = power(25, cc) + power(-1, cc) * 25; base += mod; base %= mod;
+            // ll base = get_loop_ans(cc);
+            ll base = get_loop_ans_2(cc);
             ans *= base; ans %= mod;
         }
     } else {
@@ -161,6 +188,7 @@ void solve() {
         ans *= 26; ans %= mod;
     }
 
+//     cout << "ans:" << ans << "\n";
     auto bfs = [&]() -> void {
         while (q2.size()) {
             auto u = q2.front(); q2.pop();
@@ -185,6 +213,9 @@ int main() {
     }
     return 0;
 }
+
+
+
 ```
 
 
