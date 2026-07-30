@@ -16,8 +16,8 @@
 
 ```cpp
 struct Node {
-    int z;
-    int v;
+    int z; // 懒加载
+    int v; // 区间值
     Node() { v = 0; z = 0; }
     Node(int _v) { v = _v; z = 0; }
     // called by push_down
@@ -25,6 +25,7 @@ struct Node {
 
     }
 };
+// 自定义+
 Node operator+(const Node& a, const Node& b) {
     Node res;
     res.v = max(a.v, b.v);
@@ -51,6 +52,7 @@ struct SegTree {
     }
     void build(int o, int l, int r) {
         if (l == r) {
+          	// init 单个元素
             tr[o] = Node(a[l - 1]);
             return;
         }
@@ -61,7 +63,7 @@ struct SegTree {
     }
     void add(int o, int l, int r, int i, int u) {
         if (l == r) {
-            // upd
+            // upd 单个元素
             tr[o] = Node(u);
             return;
         }
@@ -75,7 +77,7 @@ struct SegTree {
     } 
     void add_lr(int o, int l, int r, int L, int R, int u) {
         if (L <= l && R >= r) {
-            // upd
+            // upd 区间
             tr[o] = Node(u);
             tr[o].z = u;
             return;

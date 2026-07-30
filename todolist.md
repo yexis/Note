@@ -84,6 +84,9 @@
     - 讲解https://www.bilibili.com/video/BV1yYWYzGE38/?spm_id_from=333.337.search-card.all.click&vd_source=a5e205ce7c5908e561eb8023831ffff2
 72. **牛客小白月赛127 F** https://ac.nowcoder.com/acm/contest/126634/F
 73. https://ac.nowcoder.com/acm/contest/127702/D
+74. **牛客周赛146 https://ac.nowcoder.com/acm/contest/135882/F**
+75. **力扣周赛505 F**
+76. **WQS二分** https://leetcode.cn/problems/maximum-sum-of-m-non-overlapping-subarrays-ii/description/
 
  
 
