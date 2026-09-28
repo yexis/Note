@@ -87,6 +87,6 @@
 74. **牛客周赛146 https://ac.nowcoder.com/acm/contest/135882/F**
 75. **力扣周赛505 F**
 76. **WQS二分** https://leetcode.cn/problems/maximum-sum-of-m-non-overlapping-subarrays-ii/description/
-
- 
+77. **abc476 F**
+78. **abc477 de** 
 

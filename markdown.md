@@ -24,5 +24,8 @@
 \phi
 \varphi
 
+# 向量
+\vec{a}
+\overrightarrow{AB}
 
 ```

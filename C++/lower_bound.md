@@ -26,7 +26,7 @@
 $[...,满足,满足,...,满足,|不满足|,不满足,...,不满足]$
 
 ```cpp
-int kk = lower_bound(a.begin(), a.end(), x, [&](const auto& aa, const auto^ bb) {
+int kk = lower_bound(a.begin(), a.end(), x, [&](const auto& aa, const auto& bb) {
   return condition;
 });
 ```

@@ -2,6 +2,8 @@
 
 ##### 1 emphasis
 
+- 线段树Node模板
+
 
 
 ##### 2 key points
@@ -18,8 +20,14 @@
 struct Node {
     int z; // 懒加载
     int v; // 区间值
-    Node() { v = 0; z = 0; }
-    Node(int _v) { v = _v; z = 0; }
+    Node() { 
+        v = 0; 
+        z = 0; 
+    }
+    Node(int vv) { 
+        v = v; 
+        z = 0; 
+    }
     // called by push_down
     void op() {
 
@@ -34,9 +42,9 @@ Node operator+(const Node& a, const Node& b) {
 
 struct SegTree {
     vector<int> a;
-    Node tr[800000];
-    SegTree(vector<int> _a) {
-        a = _a;
+    Node tr[800010];
+    SegTree(vector<int>& aa) {
+        a = aa;
     }
     void push_up(int o, int l, int r) {
         tr[o] = tr[o * 2] + tr[o * 2 + 1];
@@ -44,9 +52,9 @@ struct SegTree {
     void push_down(int o, int l, int r) {
         if (tr[o].z) {
             tr[o * 2].op();
-            tr[o * 2].z = tr[o].z;
+            tr[o * 2].z += tr[o].z;
             tr[o * 2 + 1].op();
-            tr[o * 2 + 1].z = tr[o].z;
+            tr[o * 2 + 1].z += tr[o].z;
             tr[o].z = 0;
         }
     }
@@ -78,6 +86,9 @@ struct SegTree {
     void add_lr(int o, int l, int r, int L, int R, int u) {
         if (L <= l && R >= r) {
             // upd 区间
+          	// 注意判断这里是否需要直接操作
+          	// tr[o].z > 0 是为了操作子树 tr[o *2] 和 tr[o * 2 + 1]
+          	// 如果只记录z可能会有问题
             tr[o] = Node(u);
             tr[o].z = u;
             return;
@@ -122,6 +133,11 @@ struct SegTree {
             return ask_index(o * 2 + 1, m + 1, r, L, R, target);
         }
         return idx;
+    }
+    // 找到最后一个等于target的下标
+    int ask_last_index(int o, int l, int r, int L, int R, int target) {
+      	// 待实现
+        return -1;
     }
 };
 ```
