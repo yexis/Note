@@ -57,7 +57,6 @@
 52. 异或线性基
 53. 求一个数表示成某数集子集异或和的方案数；
      2. 求某数集子集的最大/最小/第$k$大/第$k$小异或和；
-
 54. 求一个数在某数集子集异或和中的排名（线性基）
 55. 牛客周赛97 F https://ac.nowcoder.com/acm/contest/112078/F
 56. **力扣周赛455 T4**
@@ -87,6 +86,8 @@
 74. **牛客周赛146 https://ac.nowcoder.com/acm/contest/135882/F**
 75. **力扣周赛505 F**
 76. **WQS二分** https://leetcode.cn/problems/maximum-sum-of-m-non-overlapping-subarrays-ii/description/
-77. **abc476 F**
-78. **abc477 de** 
-
+77. abc476 F（已解决）
+78. abc477 de （已解决）
+79. **CDQ分治**
+80. **牛客周赛167 G https://ac.nowcoder.com/acm/contest/142115/G**（期望DP）
+81. **牛客周赛168F https://ac.nowcoder.com/acm/contest/142559/F** (题解看不懂)

@@ -1,12 +1,26 @@
-### Title spfa (ellman-Ford算法的优化版本)
+### Title spfa (Bellman-Ford算法的优化版本)
 
 ##### 1 emphasis
+
+- SPFA
+- 单源最短路
+- 判负环
 
 
 
 ##### 2 key points
 
- 
+SPFA：只有本轮被更新的点，其出边才有可能引起下一轮的松弛操作，因此用队列来维护被更新点的集合
+
+
+
+  适用场景：
+
+- 可以处理负边权
+- 判负环
+- 单源最短路
+
+
 
 ##### 3 thought
 
@@ -21,10 +35,13 @@
  * 使用队列进行维护；
  * vis[u]记录u点是否在队内；
  * cnt[v]记录边数，判负权环
- * 
+ *
+ * 时间复杂度：O(km~nm)
 */
 
-// pii版本
+// pii版本 
+// 返回true：表示有负环
+// 返回false：表示没有负环
 bool spfa(vector<vector<pii>>& g, int s) {
     int n = g.size();
 
@@ -33,9 +50,7 @@ bool spfa(vector<vector<pii>>& g, int s) {
     queue<int> q;
     q.push(s);
     while (q.size()) {
-        auto u = q.front();
-        q.pop();
-        vis[u] = false;
+        auto u = q.front(); q.pop(); vis[u] = false;
         for (auto& [v, w] : g[u]) {
             if (d[u] + w < d[v]) {
                 d[v] = d[u] + w;
@@ -45,8 +60,7 @@ bool spfa(vector<vector<pii>>& g, int s) {
                     return true;
                 }
                 if (!vis[v]) {
-                    q.push(v);
-                    vis[v] = true;
+                    q.push(v); vis[v] = true;
                 }
             }
         }
@@ -56,6 +70,8 @@ bool spfa(vector<vector<pii>>& g, int s) {
 ```
 
 
+
+- 原始版本
 
 ```cpp
 const int N = 1e5;

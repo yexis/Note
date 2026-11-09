@@ -1,3 +1,10 @@
+- 01bfs
+- 01-bfs
+- 01BFS
+- 01-BFS
+
+
+
 ##### 条件
 
 * 单源最短路径
@@ -39,7 +46,7 @@
                     if (w) {
                         q.emplace_back(v);
                     } else {
-                        q.emplace_back(v);
+                        q.emplace_front(v);
                     }
                 }
             }

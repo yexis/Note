@@ -113,7 +113,8 @@ const int mod = 1000000007;
 const string YES = "YES";
 const string NO = "NO";
 
-ll mod_add(ll& x, ll y) { x += (mod + y); x %= mod; return x; }
+void mod_add(ll& x, ll y) { x += (mod + y); x %= mod; }
+void mod_mul(ll& x, ll y) { x *= y % mod; x %= mod;  }
 
 ll power(ll x, ll b, ll m = mod) {
     ll ans = 1;
@@ -130,8 +131,10 @@ ll power(ll x, ll b, ll m = mod) {
 }
 
 /*
- * P8436
- * https://www.luogu.com.cn/problem/P8436
+ * P8867
+ * https://www.luogu.com.cn/problem/P8867
+ * 
+ * eDCC + 树形DP
 */
 
 struct EDCC {
@@ -142,11 +145,16 @@ struct EDCC {
 
     // (u, v, id)
     int edge_id;
+    vector<vector<int>> edges;
     vector<vector<pii>> g;
+    // 原图中每个节点的度
+    vector<int> deg;
 
     // (u, v, id)
     int new_edge_id;
     vector<vector<pii>> ng;
+    // 新图中每个节点的度
+    vector<int> new_deg;
 
     // 时间戳，追溯值
     vector<int> dfn, low;
@@ -160,24 +168,39 @@ struct EDCC {
     // 模拟栈
     vector<int> stk;
 
-    // cnt: 边双连通分量编号
-    // dcc: 节点属于哪个边双连通分量
+    // 双连通分量组
+    // cnt: 边双连通分量编号，即新图的节点编号
+    // edcc: 节点属于哪个边双连通分量
+    // redcc: edcc的反向关系，即新图节点→原图根节点
     int cnt;
-    vector<int> edcc;
+    vector<int> edcc, redcc;
     vector<vector<int>> edcc_group;
+
+    // 单连通分量组（也可以并查集维护）
+    // conn_cnt: 单连通分量编号
+    // conn: 节点属于哪个单连通分量
+    // conn_group: 待定
+    int conn_cnt;
+    vector<int> conn;
+    vector<vector<int>> conn_group;
 
     EDCC(int nn, int mm) {
         n = nn; m = mm; tot = 0; 
-        edge_id = 0; g.resize(n); 
-        new_edge_id = 0; ng.resize(n); 
+        edge_id = 0; g.resize(n); deg.resize(n);
+
+        new_edge_id = 0; ng.resize(n); new_deg.resize(n);
+
         dfn.resize(n, -1); low.resize(n, -1);
         cut_point.resize(n), cut_edge.resize(m);
-        cnt = 0; edcc.resize(n); edcc_group.resize(n);
+        cnt = 0; edcc.resize(n); edcc_group.resize(n); redcc.resize(n);
+
+        conn_cnt = 0; conn.resize(n); conn_group.resize(n);
     }
 
     void tarjan(int x, int last_id) {
         dfn[x] = low[x] = tot++; 
         stk.push_back(x);
+        conn[x] = conn_cnt;
         
         int child = 0; // 符合条件的子树个数
         for (auto [y, curr_id] : g[x]) {
@@ -210,25 +233,42 @@ struct EDCC {
                 edcc[y] = cnt; edcc_group[cnt].push_back(y);
                 if (y == x) break;
             }
+            redcc[cnt] = x;
             cnt++;
         }
     }
     void add_edge(int u, int v) {
+        edges.push_back({u, v});
         g[u].push_back(pii(v, edge_id));
         g[v].push_back(pii(u, edge_id));
+        deg[u]++, deg[v]++;
         edge_id++;
     }
-    void add_nwe_edge(int u, int v) {
+    void add_new_edge(int u, int v) {
         ng[u].push_back(pii(v, new_edge_id));
         ng[v].push_back(pii(u, new_edge_id));
+        new_deg[u]++, new_deg[v]++;
         new_edge_id++;
     }
     void set_root(int rt) {
         root = rt;
     }
+    void print() {
+        cout << "edcc_group sz:" << cnt << "\n";
+        for (int i = 0; i < cnt; i++) {
+            cout << i << " : ";
+            auto& e = edcc_group[i];
+            for (auto u : e) cout << u << " "; cout << "\n";
+        }
+
+        cout << "edcc:" << "\n";
+        for (int i = 0; i < n; i++) cout << edcc[i] << " "; cout << "\n";
+
+    }
 };
 
 
+const int N = 1000010;
 void solve() {
     int n, m; cin >> n >> m;
     
@@ -245,13 +285,53 @@ void solve() {
         }
     }
     
+    // edcc.print();
     
-    cout << edcc.cnt << "\n";
-    for (int i = 0; i < edcc.cnt; i++) {
-        cout << (int)edcc.edcc_group[i].size() << " ";
-        for (auto& e : edcc.edcc_group[i]) cout << e + 1 << " ";
-        cout << "\n";
+    // build new graph
+    for (int i = 0; i < m; i++) {
+        if (edcc.cut_edge[i]) {
+            int x = edcc.edges[i][0], y = edcc.edges[i][1];
+            int rx = edcc.edcc[x], ry = edcc.edcc[y];
+            if (rx != ry) {
+                edcc.add_new_edge(rx, ry);
+            }
+        }
     }
+
+    // edcc.cnt 
+
+    vector<ll> P(N + 1);  P[0] = 1;
+    for (int i = 1; i <= N; i++) P[i] = P[i - 1] * 2 % mod;
+
+    ll ans = 0;
+    ll siz[edcc.cnt]; for (int i = 0; i < edcc.cnt; i++) siz[i] = 0;
+
+    // dp: 维护军营的修建方案
+    // dp[u][0]: 以u为根的子树中没有军营
+    // dp[u][1]: 以u为根的子树中存在军营，且所有军营到u的路径都被保护
+    ll dp[n + 1][2]; for (int i = 0; i <= n; i++) for (int j = 0; j < 2; j++) dp[i][j] = 0;
+    function<void(int, int)> dfs = [&](int u, int o) -> void {
+        siz[u] = 1;
+        int cnt = edcc.edcc_group[u].size();
+        dp[u][0] = 1; dp[u][1] = P[cnt] - 1;
+        for (auto [v, _] : edcc.ng[u]) if (v != o) {
+            dfs(v, u);
+            siz[u] += siz[v];
+            ll f0 = 0, f1 = 0;
+            f0 = dp[u][0] * dp[v][0] % mod * 2 % mod;
+            f1 = dp[u][1] * dp[v][0] % mod * 2 % mod;
+            f1 += dp[u][1] * dp[v][1] % mod; f1 %= mod;
+            f1 += dp[u][0] * dp[v][1] % mod; f1 %= mod;
+            dp[u][0] = f0, dp[u][1] = f1;
+        }
+        // 统计答案，最后乘以边的保护方案
+        int base = siz[u];
+        if (u == 0) base--;
+        ans = (ans + dp[u][1] * P[m - base] % mod) % mod;
+    };
+    dfs(0, -1);
+    cout << ans << "\n";
+
 }
 
 int main() {
